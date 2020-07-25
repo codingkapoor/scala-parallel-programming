@@ -5,7 +5,8 @@ Solutions to the Coursera's "Parallel Programming" course
 To run the **ScalaShop** program:
 ```
 $ cd scalashop
-$ sbt runMain scalashop.ScalaShop
+$ sbt 
+> runMain scalashop.ScalaShop
 ```
 
 To run the **HorizontalBoxBlur** program:
