@@ -2,17 +2,18 @@
 Solutions to the Coursera's "Parallel Programming" course
 
 ## ScalaShop
+To run the **ScalaShop** program:
 ```
 $ cd scalashop
-$ sbt
+$ sbt runMain scalashop.ScalaShop
 ```
 
-To run the HorizontalBoxBlur program:
+To run the **HorizontalBoxBlur** program:
 ```
 > runMain scalashop.HorizontalBoxBlurRunner
 ```
 
-To run the VerticalBoxBlur program:
+To run the **VerticalBoxBlur** program:
 ```
 > runMain scalashop.VerticalBoxBlurRunner
 ```
