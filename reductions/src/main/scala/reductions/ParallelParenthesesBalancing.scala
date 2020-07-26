@@ -40,6 +40,7 @@ object ParallelParenthesesBalancing extends ParallelParenthesesBalancingInterfac
   /** Returns `true` iff the parentheses in the input `chars` are balanced.
    */
   def balance(chars: Array[Char]): Boolean = {
+    @tailrec
     def balanceR(index: Int, res: Int): Boolean = {
       if (index == chars.length) {
         if (res == 0) true
