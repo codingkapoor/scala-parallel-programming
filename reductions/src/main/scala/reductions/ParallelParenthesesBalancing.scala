@@ -59,6 +59,20 @@ object ParallelParenthesesBalancing extends ParallelParenthesesBalancingInterfac
   }
 
   /** Returns `true` iff the parentheses in the input `chars` are balanced.
+   *
+   *                                                    PASS
+   *                                                "()(())" Nil
+   *                    "()(" List(1)                                       "())" List(-1)
+   *          "(" List(1)             ")(" List(-1, 1)            "(" List(1)             "))" List(-1, -1)
+   *                      ")" List(-1)               "(" List(1)               ")" List(-1)               ")" List(-1)
+   *
+   *                                                    FAIL
+   *                                                ")((())" List(-1, 1)
+   *                    ")((" List(-1, 1, 1)                                 "())" List(-1)
+   *          ")" List(-1)             "((" List(1, 1)            "(" List(1)             "))" List(-1, -1)
+   *                         "(" List(1)             "(" List(1)               ")" List(-1)               ")" List(-1)
+   *                          
+   *
    */
   def parBalance(chars: Array[Char], threshold: Int): Boolean = {
 
