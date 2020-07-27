@@ -60,18 +60,26 @@ object ParallelParenthesesBalancing extends ParallelParenthesesBalancingInterfac
 
   /** Returns `true` iff the parentheses in the input `chars` are balanced.
    *
-   *                                                    PASS
-   *                                                "()(())" Nil
-   *                    "()(" List(1)                                       "())" List(-1)
-   *          "(" List(1)             ")(" List(-1, 1)            "(" List(1)             "))" List(-1, -1)
-   *                      ")" List(-1)               "(" List(1)               ")" List(-1)               ")" List(-1)
+   *                                             PASS
+   *                                         "()(())" Nil
+   *              "()(" List(1)                                       "())" List(-1)
+   *   "(" List(1)             ")(" List(-1, 1)            "(" List(1)             "))" List(-1, -1)
+   *               ")" List(-1)               "(" List(1)               ")" List(-1)               ")" List(-1)
    *
-   *                                                    FAIL
-   *                                                ")((())" List(-1, 1)
-   *                    ")((" List(-1, 1, 1)                                 "())" List(-1)
-   *          ")" List(-1)             "((" List(1, 1)            "(" List(1)             "))" List(-1, -1)
-   *                         "(" List(1)             "(" List(1)               ")" List(-1)               ")" List(-1)
-   *                          
+   *                                              FAIL
+   *                                       ")((())" List(-1, 1)
+   *             ")((" List(-1, 1, 1)                                 "())" List(-1)
+   *   ")" List(-1)             "((" List(1, 1)            "(" List(1)             "))" List(-1, -1)
+   *                  "(" List(1)             "(" List(1)               ")" List(-1)               ")" List(-1)
+   *
+   *
+   *  Idea is to break down the given char array to it's last character, add +1 against '(' and -1 against ')' in a list
+   *  and as we go up the complete array, we recursively merge these lists from left and right in such a way that only if
+   *  left.last > 0 and right.head < 0 we remove those elements from individual lists and merge recursively.
+   *
+   *  merge(List(1, 1), List(1, 1)) -> List(1, 1, 1, 1)
+   *  merge(List(1, 1, 1), List(-1, 1, 1)) -> List(1, 1, 1, 1)
+   *  merge(List(1, 1, 1), List(-1, -1, 1)) -> List(1, 1)
    *
    */
   def parBalance(chars: Array[Char], threshold: Int): Boolean = {
