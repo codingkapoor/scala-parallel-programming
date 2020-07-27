@@ -95,7 +95,7 @@ object ParallelParenthesesBalancing extends ParallelParenthesesBalancingInterfac
           ls1.last > 0 && ls2.head > 0 ||
           ls1.last < 0 && ls2.head < 0
       ) ls1 ::: ls2
-      else {
+      else { // ls1.last > 0 && ls2.head < 0
         if (ls1.size == 1) ls2
         else merge(ls1.take(ls1.size - 1), ls2.tail)
       }
