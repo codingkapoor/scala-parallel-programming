@@ -81,6 +81,9 @@ object ParallelParenthesesBalancing extends ParallelParenthesesBalancingInterfac
    *  merge(List(1, 1, 1), List(-1, 1, 1)) -> List(1, 1, 1, 1)
    *  merge(List(1, 1, 1), List(-1, -1, 1)) -> List(1, 1)
    *
+   *  The metric for a balanced string being that the list at the top of the tree should have reduced to Nil after all
+   *  recursive merges.
+   *
    */
   def parBalance(chars: Array[Char], threshold: Int): Boolean = {
 
