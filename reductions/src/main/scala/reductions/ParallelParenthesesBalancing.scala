@@ -62,15 +62,41 @@ object ParallelParenthesesBalancing extends ParallelParenthesesBalancingInterfac
    */
   def parBalance(chars: Array[Char], threshold: Int): Boolean = {
 
-    def traverse(idx: Int, until: Int, arg1: Int, arg2: Int) /*: ???*/ = {
-      ???
+    @tailrec
+    def merge(ls1: List[Int], ls2: List[Int]): List[Int] = {
+      if (ls1.isEmpty || ls2.isEmpty) ls1 ::: ls2
+      else if (
+        ls1.last < 0 && ls2.head > 0 ||
+          ls1.last > 0 && ls2.head > 0 ||
+          ls1.last < 0 && ls2.head < 0
+      ) ls1 ::: ls2
+      else {
+        if (ls1.size == 1) ls2
+        else merge(ls1.take(ls1.size - 1), ls2.tail)
+      }
     }
 
-    def reduce(from: Int, until: Int) /*: ???*/ = {
-      ???
+    def traverse(index: Int, until: Int): List[Int] = {
+      if (until - index == 1) {
+        if (chars(index) == '(') List(1)
+        else if(chars(index) == ')') List(-1)
+        else Nil
+      } else {
+        val mid = index + (until - index) / 2
+        merge(traverse(index, mid), traverse(mid, until))
+      }
     }
 
-    reduce(0, chars.length) == ???
+    def reduce(from: Int, until: Int): List[Int] = {
+      if (until - from <= threshold) traverse(from, until)
+      else {
+        val mid = from + (until - from) / 2
+        val (ls1, ls2) = parallel(reduce(from, mid), reduce(mid, until))
+        ls1 ::: ls2
+      }
+    }
+
+    reduce(0, chars.length).isEmpty
   }
 
   // For those who want more:
