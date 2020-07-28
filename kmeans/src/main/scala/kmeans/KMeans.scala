@@ -44,7 +44,9 @@ class KMeans extends KMeansInterface {
   }
 
   def classify(points: Seq[Point], means: Seq[Point]): Map[Point, Seq[Point]] = {
-    ???
+    val grouped = points.groupBy(point => findClosest(point, means))
+    val meansWithoutPoints = (means diff grouped.keys.toSeq).map(x => x -> Nil)
+    grouped ++ meansWithoutPoints
   }
 
   def classify(points: ParSeq[Point], means: ParSeq[Point]): ParMap[Point, ParSeq[Point]] = {
