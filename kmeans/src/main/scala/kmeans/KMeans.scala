@@ -45,12 +45,14 @@ class KMeans extends KMeansInterface {
 
   def classify(points: Seq[Point], means: Seq[Point]): Map[Point, Seq[Point]] = {
     val grouped = points.groupBy(point => findClosest(point, means))
-    val meansWithoutPoints = (means diff grouped.keys.toSeq).map(x => x -> Nil)
+    val meansWithoutPoints = (means diff grouped.keys.toSeq).map(x => x -> Seq[Point]())
     grouped ++ meansWithoutPoints
   }
 
   def classify(points: ParSeq[Point], means: ParSeq[Point]): ParMap[Point, ParSeq[Point]] = {
-    ???
+    val grouped = points.par.groupBy(point => findClosest(point, means))
+    val meansWithoutPoints = (means diff grouped.keys.toSeq).par.map(x => x -> ParSeq[Point]())
+    grouped ++ meansWithoutPoints
   }
 
   def findAverage(oldMean: Point, points: Seq[Point]): Point = if (points.isEmpty) oldMean else {
