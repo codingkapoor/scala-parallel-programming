@@ -51,7 +51,7 @@ object LineOfSight extends LineOfSightInterface {
    */
   def upsweepSequential(input: Array[Float], from: Int, until: Int): Float = {
     var maxAngle = 0F
-    for(i <- from until until)
+    for (i <- from until until)
       maxAngle = (input(i) / i) max maxAngle
 
     maxAngle
@@ -66,7 +66,12 @@ object LineOfSight extends LineOfSightInterface {
    *  work is divided and done recursively in parallel.
    */
   def upsweep(input: Array[Float], from: Int, end: Int, threshold: Int): Tree = {
-    ???
+    if (end - from <= threshold) Leaf(from, end, upsweepSequential(input, from, end))
+    else {
+      val mid = from + (end - from) / 2
+      val (l, r) = parallel(upsweep(input, from, mid, threshold), upsweep(input, mid, from, threshold))
+      Node(l, r)
+    }
   }
 
   /** Traverses the part of the `input` array starting at `from` and until
