@@ -79,9 +79,11 @@ object LineOfSight extends LineOfSightInterface {
    *  given the `startingAngle`.
    */
   def downsweepSequential(input: Array[Float], output: Array[Float], startingAngle: Float, from: Int, until: Int): Unit = {
-    output(from) = (input(from) / from) max startingAngle
-    for(i <- from + 1 until until)
-      output(i) = (input(i) / i) max output(i - 1)
+    if(from < until) {
+      output(from) = (input(from) / from) max startingAngle
+      for(i <- from + 1 until until)
+        output(i) = (input(i) / i) max output(i - 1)
+    }
   }
 
   /** Pushes the maximum angle in the prefix of the array to each leaf of the
