@@ -42,15 +42,19 @@ object LineOfSight extends LineOfSightInterface {
 
   def lineOfSight(input: Array[Float], output: Array[Float]): Unit = {
     output(0) = 0
-    for(i <- 1 until input.length) {
-      output(i) = (input(i) / i) max output(i-1)
+    for (i <- 1 until input.length) {
+      output(i) = (input(i) / i) max output(i - 1)
     }
   }
 
   /** Traverses the specified part of the array and returns the maximum angle.
    */
   def upsweepSequential(input: Array[Float], from: Int, until: Int): Float = {
-    ???
+    var maxAngle = 0F
+    for(i <- from until until)
+      maxAngle = (input(i) / i) max maxAngle
+
+    maxAngle
   }
 
   /** Traverses the part of the array starting at `from` and until `end`, and
