@@ -88,11 +88,11 @@ class KMeans extends KMeansInterface {
   }
 
   def converged(eta: Double, oldMeans: Seq[Point], newMeans: Seq[Point]): Boolean = {
-    ???
+    (oldMeans zip newMeans).forall { case (oldMean, newMean) => oldMean.squareDistance(newMean) <= eta }
   }
 
   def converged(eta: Double, oldMeans: ParSeq[Point], newMeans: ParSeq[Point]): Boolean = {
-    ???
+    (oldMeans zip newMeans).par.forall { case (oldMean, newMean) => oldMean.squareDistance(newMean) <= eta }
   }
 
   @tailrec
