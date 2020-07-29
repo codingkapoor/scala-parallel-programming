@@ -97,12 +97,18 @@ class KMeans extends KMeansInterface {
 
   @tailrec
   final def kMeans(points: Seq[Point], means: Seq[Point], eta: Double): Seq[Point] = {
-    if (???) kMeans(???, ???, ???) else ??? // your implementation need to be tail recursive
+    val classified = classify(points, means)
+    val updated = update(classified, means)
+
+    if (!converged(eta, means, updated)) kMeans(points, updated, eta) else updated
   }
 
   @tailrec
   final def kMeans(points: ParSeq[Point], means: ParSeq[Point], eta: Double): ParSeq[Point] = {
-    if (???) kMeans(???, ???, ???) else ??? // your implementation need to be tail recursive
+    val classified = classify(points, means)
+    val updated = update(classified, means)
+
+    if (!converged(eta, means, updated)) kMeans(points, updated, eta) else updated
   }
 }
 
